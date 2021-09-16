@@ -67,6 +67,8 @@ class BaseRule(object):
         self.consequent = consequent
         self.scope = scope
         self.comments = comments
+        if(self.adtecedent == None):
+            assert type(self.consequent) == Assertion
 
 
 Cure_rules = ['Rule_Cure_1']
