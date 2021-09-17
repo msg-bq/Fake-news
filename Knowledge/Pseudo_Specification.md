@@ -21,7 +21,7 @@
   为了解决上述问题，则有如下coding的逻辑：
   * 为了执行，那在我们这个场景中，operator本身的定义是文字型定义，所以多数时候它不是可以直接执行的，而是与各个rule相关联的执行。这个类暂时是BaseOperator(可能会和ActionOperators合并)，类中记录了参数、以及相关的规则(相关是指，此Operator出现在某条rule的adtecedent或consequent的左式(adtecedent为空)中)。并书写__call__来令其可执行，返回所有可匹配的rule能生成的新facts(此类尚未写完)。这样的话，"执行"就被定义为"遍历所有此operator可以蕴含(做adtecedent推consequent)或可以"="(adtecedent为空)的rule"，返回consequent或consequent的右式。__init__里设定好涉及的rule、传入参数的数量和定义域，在__call__时传入参数(包括允许传入参数和Assertion的右式，这样的话才能支持所有的数据类型)。继承ActionOperators这个母类，而继续定义的新class(表示operator)，都是预定义好的，后期是不动的，除非rule有扩充。
   * Assertion左式可以是一个Operator(X)，所以需要一个类，它可以存储Operator和已知变量具体值的X，这个类并非是预定义的，而是明确写出来变量的值的。所以ActionOperators包括具体的变量，以及需要在__init__里定义一个可以包含"继承于BaseOperator而预定义的Operator"的变量，以便以后推理时调用。
-  * 类似上一条的两种情况，匹配也是分匹配adtecedent和当adtecedent为空时，匹配consequent的左式。前者因为默认必是Assertion类型，直接分别匹配左右式即可。后者，实际就是匹配类型为Assertion的consequent的左式。也就是说，这两种情景，都是匹配一端，本质逻辑是一样的。而这一端，要么是Assertion，那就是继续递归，直到需要匹配的是括号内的变量。那这时候就是要么完全相等，要么是从属关系。根据不同的类型，各自判一下就行，写在BaseRule这个母类里。
+  * 类似上一条的两种情况，匹配也是分匹配adtecedent和当adtecedent为空时，匹配consequent的左式。前者因为默认必是Assertion类型，直接分别匹配左右式即可。后者，实际就是匹配类型为Assertion的consequent的左式。也就是说，这两种情景，都是匹配一端，本质逻辑是一样的。而这一端，要么是Assertion，那就是继续递归，直到需要匹配的是括号内的变量。那这时候就是要么完全相等，要么是从属关系。根据不同的类型，各自判一下就行。判别逻辑是通用的，写在BaseRule这个母类里。
   
   
 ### 细节
