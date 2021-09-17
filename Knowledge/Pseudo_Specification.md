@@ -10,7 +10,7 @@
 ### 基本逻辑
   断言逻辑应该是一种范畴的思想吧，所以所有的东西我都打算写成class，显式地以对象的样子来边写，虽然说是说python内部实现都是对象。
   
-  concept比较简单，单纯地用对象的一个变量value，记录它的值就行。只有当它是Assertion时，才会因为python不提供记录等式的数据结构(不打算用str表示)，所以单独写个BaseAssertion类，以存储断言式的左右式。
+  Concept比较简单，单纯地用对象的一个变量value，记录它的值就行。只有当它是Assertion时，才会因为python不提供记录等式的数据结构(不打算用str表示)，所以单独写个BaseAssertion类，以存储断言式的左右式。
   
   Operator由于需要和rule结合，且无法从形式上良定义，所以我认为有这样两个问题需要解决：
   
@@ -23,6 +23,7 @@
   * Assertion左式可以是一个Operator(X)，所以需要一个类，它可以存储Operator和已知变量具体值的X，这个类并非是预定义的，而是明确写出来变量的值的。所以ActionOperators包括具体的变量，以及需要在__init__里定义一个可以包含"继承于BaseOperator而预定义的Operator"的变量，以便以后推理时调用。
   * 类似上一条的两种情况，匹配也是分匹配adtecedent和当adtecedent为空时，匹配consequent的左式。前者因为默认必是Assertion类型，直接分别匹配左右式即可。后者，实际就是匹配类型为Assertion的consequent的左式。也就是说，这两种情景，都是匹配一端，本质逻辑是一样的。而这一端，要么是Assertion，那就是继续递归，直到需要匹配的是括号内的变量。那这时候就是要么完全相等，要么是从属关系。根据不同的类型，各自判一下就行。判别逻辑是通用的，写在BaseRule这个母类里。
   
+  Rule就没什么说的了，按照原本的写就好了。需要的数据类型或operator相关的一些类，也在上述过程中定义好了。需要的函数就是上面coding逻辑的第三条。然后还有个需要单独写的，是自己设一些符号，代表特定的未定义concept或其他需求。比如"@ALL"代表全集，"@Default:XXX 代表默认参数"，"@Dict:XX 代表这是个字典，而不是普通的class concept，可以直接hash而不是遍历"等等，根据需求增加。
   
 ### 细节
 * BaseConcept就一个value，用于记录具体包含什么。Number记录int或float，Individual记录str，Set记录list，这三个是python自带的。但Assertion记录
