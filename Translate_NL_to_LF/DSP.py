@@ -39,7 +39,7 @@ class cure_dependency_rule():
         self.rules = ['svo']
     
     def build_sematic_tree(self, ner_result):
-        Root = {'word': [], 'dep': '', 'tag': '', 'son': {}, 'pos' = []}
+        Root = {'word': [], 'dep': '', 'tag': '', 'son': {}, 'pos': []}
         now = Root
 #         pos_tokens = {}
         pos_cnt = 0
