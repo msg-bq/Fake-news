@@ -29,7 +29,7 @@ def ner_spacy(models, datasets):
 # cure_dependency_rules = []
 # dependency_rules['cure_dependency_rules': 'cure_dependency_rule']
 
-class cure_dependency_rule(): 
+class cure_dependency_rule(): #记录和cure有关的各种规则，不过很多规则应该是通用的，所以日后可以考虑单独拎出去，作为一个可被索引的抽取规则库
     def __init__(self, text):
         self.text = text
         replace_words_generate(self.text)
@@ -38,40 +38,40 @@ class cure_dependency_rule():
 #要不在cc处，建成类似可持久化的形式？另外不知道有无向上索引的,好像没有
         self.rules = ['svo']
     
-    def build_sematic_tree(self, ner_result):
-        Root = {'word': [], 'dep': '', 'tag': '', 'son': {}, 'pos': []}
-        now = Root
-#         pos_tokens = {}
-        pos_cnt = 0
-        pos_son = []
-        for token in self.ner_result:
-#             pos_tokens[token.text] = pos_cnt
-            if(token.dep == 'ROOT'):
-                pos_son.append(pos_cnt)
-                pos_cnt += 1
-                while(pos_cnt < len(self.ner_result) 
-                      && (self.ner_result[pos_cnt].dep_ == 'cc' || self.ner_result[pos_cnt].dep_ == 'conj')):
-                    if(self.ner_result[pos_cnt].dep_ == 'conj'):
-                        pos_son.append(pos_cnt)
-                    pos_cnt += 1
-                
-            pos_cnt += 1
-        
-        now['pos'] = pos_son
-        
-        while(len(pos_son) != 0):
-            for pos in now['pos']:
-                now['word'].append(ner_result[pos].text)
-                now['dep'] = ner_result[pos].dep_
-                now['tag'] = ner_result[pos].tag_
-                
-                #找子节点
-                pos_cnt_son = 0
-                for token in self.ner_result:
-                    if(token.head.text == ner_result[pos].text):
-                        nxt = {'word': [], 'dep': '', 'tag': '', 'son': {}, 'pos' = []}
-                    
-                    pos_cnt_son += 1
+#     def build_sematic_tree(self, ner_result):
+#         Root = {'word': [], 'dep': '', 'tag': '', 'son': {}, 'pos': []}
+#         now = Root
+# #         pos_tokens = {}
+#         pos_cnt = 0
+#         pos_son = []
+#         for token in self.ner_result:
+# #             pos_tokens[token.text] = pos_cnt
+#             if(token.dep == 'ROOT'):
+#                 pos_son.append(pos_cnt)
+#                 pos_cnt += 1
+#                 while(pos_cnt < len(self.ner_result)
+#                       && (self.ner_result[pos_cnt].dep_ == 'cc' || self.ner_result[pos_cnt].dep_ == 'conj')):
+#                     if(self.ner_result[pos_cnt].dep_ == 'conj'):
+#                         pos_son.append(pos_cnt)
+#                     pos_cnt += 1
+#
+#             pos_cnt += 1
+#
+#         now['pos'] = pos_son
+#
+#         while(len(pos_son) != 0):
+#             for pos in now['pos']:
+#                 now['word'].append(ner_result[pos].text)
+#                 now['dep'] = ner_result[pos].dep_
+#                 now['tag'] = ner_result[pos].tag_
+#
+#                 #找子节点
+#                 pos_cnt_son = 0
+#                 for token in self.ner_result:
+#                     if(token.head.text == ner_result[pos].text):
+#                         nxt = {'word': [], 'dep': '', 'tag': '', 'son': {}, 'pos' = []}
+#
+#                     pos_cnt_son += 1
     
     
     def translate_to_svo(self):
