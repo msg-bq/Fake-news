@@ -1,7 +1,7 @@
 # 文件情况
-Knowledge是modeling结果转代码部分
+Knowledge文件夹是modeling结果转代码部分
 
-Translate xxxxx是翻译自然语言的
+Translate_NL_to_LF文件夹是翻译自然语言的
 
 另一个组会或讨论情况
 
