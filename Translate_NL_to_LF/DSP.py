@@ -122,3 +122,61 @@ class cure_dependency_rule(): #记录和cure有关的各种规则，不过很多
 #     #依存关系检测
 #     for token in ner_results:
 #         print('{0}({1}) <-- {2} -- {3}({4})'.format(token.text, token.tag_, token.dep_, token.head.text, token.head.tag_))
+
+
+
+#以下是半成品，有一些错误的
+
+def check_conj(Point_tokens, now, words):
+    print(now)
+    if ('conj' in now.keys()):
+        for item in now['conj']:
+            words.append(item.text)
+
+
+#     while('cc' in now.keys() or 'conj' in now.keys()): #如果主语附近有连词，这里需要把每个主语都加进来
+#             if('cc' in now.keys()): #如果主语旁边有连接词，把conj放到主语那里
+#                 for item in now['cc']:
+#                     print(Point_tokens[str(item)])
+#                     if('conj' in Point_tokens[str(item)].keys()): #cc和conj同时存在。不过一般来说不太可能缺一个
+#     #                     if('dobj' not in now['cc']['conj'].keys()
+#     #                        and ('prep' not in now['cc']['conj'].keys() or 'pobj' not in now['cc']['conj']['prep'].keys())): #这里也是应该不会有问题，但稳妥起见补的
+#                             #就是说，这个主语没有直接宾语或介词(介词后常会跟着间接宾语)在其后面。然后这里or用了if的短路规则。
+#                         conj = Point_tokens[str(item['conj'])]
+#                         words.append(conj.text)
+#                         now = Point_tokens[str(conj)]
+#             else: #如果直接有conj(比如三个连词)
+# #                 if('dobj' not in now['cc']['conj'].keys()
+# #                    and ('prep' not in now['cc']['conj'].keys() or 'pobj' not in now['cc']['conj']['prep'].keys())): #这里也是应该不会有问题，但稳妥起见补的
+#                 words.append(now['cc']['conj'].text)
+#                 now = Point_tokens[str(now['cc'])]
+
+def VB_1(Point_tokens):
+    nsubj = []
+    obj = []
+    if ('nsubj' in Point_tokens['cure'].keys()):  # 判断主语存在
+        for item in Point_tokens['cure']['nsubj']:
+            print("样：", item)
+            nsubj.append(item.text)
+            now = Point_tokens[str(item)]
+            check_conj(Point_tokens, now, nsubj)
+
+    if ('dobj' in Point_tokens['cure'].keys()):  # 判断直接宾语存在
+        for item in Point_tokens['cure']['dobj']:
+            obj.append(item.text)
+        now = Point_tokens['cure']['dobj']
+        check_conj(Point_tokens, now, obj)
+
+    if ('prep' in Point_tokens['cure'].keys() and 'pobj' in Point_tokens['cure']['prep'].keys()):
+        for item in Point_tokens['cure']['prep']['pobj']:
+            obj.append(item.text)
+        now = Point_tokens['cure']['prep']['pobj']
+        check_conj(Point_tokens, now, obj)
+
+    if (len(nsubj) * len(obj) > 0):
+        return nsubj, obj
+    else:
+        return False, False
+
+
+a, b = VB_1(Point_tokens)
