@@ -32,4 +32,4 @@
 - [ ] 'a group called americas frontline doctors are featured in viral video claiming hydroxychloroquine cures covid19',
 - [ ] 'stella immanuel claims that the drug combination of hydroxychloroquine zinc and azithromycin is a cure and preventative for covid19 and that people dont need to wear masks or practice physical distancing in a breitbart video featuring a group called americas frontline doctors',
 - [ ] 'fda warns of silver other bogus covid19 cures',
-- [X] 'hydroxychloroquine no covid cure experts warn'
+- [ ] 'hydroxychloroquine no covid cure experts warn'
