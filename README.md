@@ -11,7 +11,7 @@ Translate_NL_to_LF文件夹是翻译自然语言的
 
 最主要的是，按惯例咱**一周**得向周老师汇报整体情况一次，一般取决于上一次周老师回复邮件或去张江的时间过一周。
 
-下次时间是：**9.21晚**
+下次时间是：**9.21晚**，实在来不及再拖叭
 
 目前的TODO：
 - [ ] Knowledge里的[Pseudo_Specification.md](https://github.com/msg-bq/Fake-news/blob/main/Knowledge/Pseudo_Specification.md)是代码的是逻辑，交流可行后，据此完善基本代码及cure样本必备的concepts, operators, 和rules.
