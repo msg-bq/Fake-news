@@ -34,11 +34,26 @@ class cure_dependency_rule(): #记录和cure有关的各种规则，不过很多
         self.text = text
         replace_words_generate(self.text)
         self.ner_result = ner_spacy('en_core_web_sm', self.text)
-        self.sematic_tree = self.build_sematic_tree(self.ner_result) #建树虽然整齐，但是好像还是不那么地舒服。
-#要不在cc处，建成类似可持久化的形式？另外不知道有无向上索引的,好像没有
+#         self.sematic_tree = self.build_sematic_tree(self.ner_result) #建树虽然整齐，但是好像还是不那么地舒服。
+# #要不在cc处，建成类似可持久化的形式？另外不知道有无向上索引的,好像没有
         self.rules = ['svo']
-    
-#     def build_sematic_tree(self, ner_result):
+
+    def build_sematic_tree(ner_result):  # 先不建树了，有一个双向的指针就好了
+        '''
+        :return: Point_tokens['cure'] = {'nsubj': ['azithromycin'], 'ROOT': ['cure'], 'dobj': ['virus']}
+        '''
+        Point_tokens = {}  # 记录父节点到子节点的指针
+        for token in ner_result:
+            head = token.head.text
+            if (head not in Point_tokens.keys()): #判断父节点不存在
+                Point_tokens[head] = {}
+            if (token.dep_ not in Point_tokens[head].keys()): #判断父节点对应的子节点的类型是否存在
+                Point_tokens[head][token.dep_] = []
+            Point_tokens[head][token.dep_].append(token.text) #用数组是因为，同依存关系的子节点可以有多个，比如conj
+        return Point_tokens
+
+
+    #     def build_sematic_tree(self, ner_result):
 #         Root = {'word': [], 'dep': '', 'tag': '', 'son': {}, 'pos': []}
 #         now = Root
 # #         pos_tokens = {}
