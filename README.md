@@ -15,6 +15,6 @@ Translate_NL_to_LF文件夹是翻译自然语言的
 
 目前的TODO：
 - [ ] Knowledge里的[Pseudo_Specification.md](https://github.com/msg-bq/Fake-news/blob/main/Knowledge/Pseudo_Specification.md)是代码的是逻辑，交流可行后，据此完善基本代码及cure样本必备的concepts, operators, 和rules.
-- [ ] 翻译部分各自写规则，细节在[README](https://github.com/msg-bq/Fake-news/blob/main/Translate_NL_to_LF/README.md)和[资料](https://github.com/msg-bq/Fake-news/blob/main/Translate_NL_to_LF/%E8%B5%84%E6%96%99.md)里有介绍。这两天要处理的样本在[这里](https://github.com/msg-bq/Fake-news/tree/main/Translate_NL_to_LF/cure%E6%A0%B7%E6%9C%AC)
+- [ ] 翻译部分我们三个各自写规则，细节在[README](https://github.com/msg-bq/Fake-news/blob/main/Translate_NL_to_LF/README.md)和[资料](https://github.com/msg-bq/Fake-news/blob/main/Translate_NL_to_LF/%E8%B5%84%E6%96%99.md)里有介绍。这两天要处理的样本在[这里](https://github.com/msg-bq/Fake-news/tree/main/Translate_NL_to_LF/cure%E6%A0%B7%E6%9C%AC)
 - [ ] 消歧是用词表还是算法，师姐你决定后听你的
 - [ ] 鲁棒性的分享，可心师兄你根据你的情况决定吧。然后需要我学什么做什么，或者一起准备点什么就说一下吧。
