@@ -3,7 +3,7 @@
 第一次我们就以熟悉内容为主。师兄师姐你们各拿五个尝试一下，以此来评估下我是不是有没说清的地方。两点：1)涉及的规则有可能已经被总结进来了；2)有的样本可能会因为提取复杂，而本来就不打算总结规则。
 不要求100%召回或精确率。所以表担心这个很难搞，是有基底的，并且太难做的我们本也不打算做。
 
-涉及cure的样本如下(完成的在markdown格式下的括号内输入"X", 会显示为对勾)，师姐前五个，师兄6-10，剩下的我处理：
+涉及cure的样本如下(完成的在markdown格式下的括号内输入"X", 会显示为对勾)，师姐前五个，可心师兄6-10，剩下的我处理：
 
 - [ ] 'social media posts recommend tonic water and zinc as a cure for a novel coronavirus infection as the drink contains quinine whose synthetic relative hydroxychloroquine is on trial as a covid19 treatment',
 - [ ] 'israeli recipe for lemon and bicarbonate drink is a coronavirus cure',
