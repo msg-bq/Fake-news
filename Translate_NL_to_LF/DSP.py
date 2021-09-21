@@ -125,13 +125,20 @@ class cure_dependency_rule(): #记录和cure有关的各种规则，不过很多
 
 
 
-#以下是半成品，有一些错误的
+#以下是半成品，已经基本可以运行，还差一点调整
 
-def check_conj(Point_tokens, now, words):
+def check_conj(Point_tokens, now):
+    '''
+    对于conj直接指示并列关系的情景，提取conj。
+    '''
     print(now)
-    if ('conj' in now.keys()):
+    words = []
+    if ('conj' in now.keys()):  # cc应该不影响conj的识别
         for item in now['conj']:
+            #             print('item.text: ', item.text)
             words.append(item.text)
+            words.extend(check_conj(Point_tokens, Point_tokens[item.text]))  # 继续递归往下找conj
+    return words
 
 
 #     while('cc' in now.keys() or 'conj' in now.keys()): #如果主语附近有连词，这里需要把每个主语都加进来
@@ -153,25 +160,26 @@ def check_conj(Point_tokens, now, words):
 
 def VB_1(Point_tokens):
     nsubj = []
-    obj = []
+    obj = ['covid']
     if ('nsubj' in Point_tokens['cure'].keys()):  # 判断主语存在
         for item in Point_tokens['cure']['nsubj']:
-            print("样：", item)
-            nsubj.append(item.text)
-            now = Point_tokens[str(item)]
-            check_conj(Point_tokens, now, nsubj)
+            nsubj.append(item.text)  # 已经找到主语了，那就放进来。不过正常应该只有一个，这里只是因为建树时候顺带了数组存储
+            now = Point_tokens[item.text]
+            nsubj.extend(check_conj(Point_tokens, now))  # 主语的conj应该都真的是对应的主语，真的直接指示并列关系。
+            # conj不能直接指示并列关系的情况如下："I play with him and she like it." 此时play和like作为两个中心词，是conj的关系，但由于后者like的nsubj是独立的，所以不公用前面的I
+            # 换句话说，目前已知不能指示的，只有中心词并列的情况。而nsubj或obj并列的，应该都真的单纯就是并列
 
-    if ('dobj' in Point_tokens['cure'].keys()):  # 判断直接宾语存在
-        for item in Point_tokens['cure']['dobj']:
-            obj.append(item.text)
-        now = Point_tokens['cure']['dobj']
-        check_conj(Point_tokens, now, obj)
+    #     if('dobj' in Point_tokens['cure'].keys()): #判断直接宾语存在
+    #         for item in Point_tokens['cure']['dobj']:
+    #             obj.append(item.text)
+    #         now = Point_tokens['cure']['dobj']
+    #         check_conj(Point_tokens, now, obj)
 
-    if ('prep' in Point_tokens['cure'].keys() and 'pobj' in Point_tokens['cure']['prep'].keys()):
-        for item in Point_tokens['cure']['prep']['pobj']:
-            obj.append(item.text)
-        now = Point_tokens['cure']['prep']['pobj']
-        check_conj(Point_tokens, now, obj)
+    #     if('prep' in Point_tokens['cure'].keys() and 'pobj' in Point_tokens['cure']['prep'].keys()):
+    #         for item in Point_tokens['cure']['prep']['pobj']:
+    #             obj.append(item.text)
+    #         now = Point_tokens['cure']['prep']['pobj']
+    #         check_conj(Point_tokens, now, obj)
 
     if (len(nsubj) * len(obj) > 0):
         return nsubj, obj
@@ -180,3 +188,5 @@ def VB_1(Point_tokens):
 
 
 a, b = VB_1(Point_tokens)
+print(a)
+print(b)
