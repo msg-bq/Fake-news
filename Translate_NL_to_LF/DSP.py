@@ -146,6 +146,7 @@ def build_sematic_tree(ner_result):  # 先不建树了，有一个双向的指�
 
 Point_tokens = build_sematic_tree(ner_result)
 
+
 def check_conj(Point_tokens, now):
     '''
     对于conj直接指示并列关系的情景，提取conj。
@@ -204,17 +205,19 @@ def VB_1(Point_tokens):
         prep = []  # 间接宾语需要先找介词再找宾语
         for item in Point_tokens[head_word][
             'prep']:  # 有可能有多个，Alice play in the room, on the table and under the tree. in和on都是play的prep
-            prep.append(Point_tokens[item.text]['pobj'])  # 类同主语
+            prep.append(item.text)  # 类同主语
             now = Point_tokens[item.text]
             prep.extend(check_conj(Point_tokens, now))
 
         for item in prep:
-            if ('pobj' in Point_tokens[item.text].keys()):
-                obj.append(Point_tokens[item.text]['pobj'])
+            if ('pobj' in Point_tokens[item].keys()):
+                for pobj in Point_tokens[item]['pobj']:
+                    obj.append(pobj)
 
     if (len(nsubj) * len(obj) > 0):
         return nsubj, obj
     else:
+        print(nsubj, obj)
         return False, False
 
 
