@@ -125,7 +125,26 @@ class cure_dependency_rule(): #记录和cure有关的各种规则，不过很多
 
 
 
-#以下是半成品，已经基本可以运行，还差一点调整
+#下面是cure做verb的第一个规则
+
+ner_result = ner_spacy('en_core_web_sm', 'thousands of doctors say hydroxychloroquine cures coronavirus')
+
+def build_sematic_tree(ner_result):  # 先不建树了，有一个双向的指针就好了
+    Point_tokens = {}  # 记录父节点到子节点的指针
+    for token in ner_result:
+        head = token.head.text  # 要不要词母化一下？
+        if (head not in Point_tokens.keys()):
+            Point_tokens[head] = {}
+        if (token.dep_ not in Point_tokens[head].keys()):
+            Point_tokens[head][token.dep_] = []
+        Point_tokens[head][token.dep_].append(token)
+
+        if (token.text not in Point_tokens.keys()):
+            Point_tokens[token.text] = {}
+    return Point_tokens
+
+
+Point_tokens = build_sematic_tree(ner_result)
 
 def check_conj(Point_tokens, now):
     '''
@@ -161,23 +180,29 @@ def check_conj(Point_tokens, now):
 def VB_1(Point_tokens):
     nsubj = []
     obj = []
-    if ('nsubj' in Point_tokens['cure'].keys()):  # 判断主语存在
-        for item in Point_tokens['cure']['nsubj']:
+    head_word = 'cure'
+    for word in Point_tokens.keys():
+        if (word[:4] == 'cure'):
+            head_word = word
+            break
+
+    if ('nsubj' in Point_tokens[head_word].keys()):  # 判断主语存在
+        for item in Point_tokens[head_word]['nsubj']:
             nsubj.append(item.text)  # 已经找到主语了，那就放进来。不过正常应该只有一个，这里只是因为建树时候顺带了数组存储
             now = Point_tokens[item.text]
             nsubj.extend(check_conj(Point_tokens, now))  # 主语的conj应该都真的是对应的主语，真的直接指示并列关系。
             # conj不能直接指示并列关系的情况如下："I play with him and she like it." 此时play和like作为两个中心词，是conj的关系，但由于后者like的nsubj是独立的，所以不公用前面的I
             # 换句话说，目前已知不能指示的，只有中心词并列的情况。而nsubj或obj并列的，应该都真的单纯就是并列
 
-    if ('dobj' in Point_tokens['cure'].keys()):  # 判断直接宾语存在
-        for item in Point_tokens['cure']['dobj']:
+    if ('dobj' in Point_tokens[head_word].keys()):  # 判断直接宾语存在
+        for item in Point_tokens[head_word]['dobj']:
             obj.append(item.text)  # 类同主语
             now = Point_tokens[item.text]
             obj.extend(check_conj(Point_tokens, now))
 
-    if ('prep' in Point_tokens['cure'].keys()):  # 判断直接宾语存在
+    if ('prep' in Point_tokens[head_word].keys()):  # 判断直接宾语存在
         prep = []  # 间接宾语需要先找介词再找宾语
-        for item in Point_tokens['cure'][
+        for item in Point_tokens[head_word][
             'prep']:  # 有可能有多个，Alice play in the room, on the table and under the tree. in和on都是play的prep
             prep.append(Point_tokens[item.text]['pobj'])  # 类同主语
             now = Point_tokens[item.text]
