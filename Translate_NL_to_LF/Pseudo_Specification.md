@@ -23,7 +23,7 @@
 
 一、cure样本
 1. cure做动词的规则
-   1. cure的主动句
+   1. cure的主动句（函数名VB_1）
       1. 如果cure的主语和直接宾语均存在，则直接提取nsubj和dobj。 
       2. 如果主语不存在，且cure的依存关系是conj，则向上寻找cure的head，使用第一个有主语的head的nsubj；如果宾语不存在，且存在某个词以conj的依存关系指向cure，则向下寻找cure的conj，使用第一个有直接宾语的子节点的dobj。
       
