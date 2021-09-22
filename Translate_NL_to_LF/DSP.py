@@ -131,7 +131,7 @@ def check_conj(Point_tokens, now):
     '''
     对于conj直接指示并列关系的情景，提取conj。
     '''
-    print(now)
+    #     print(now)
     words = []
     if ('conj' in now.keys()):  # cc应该不影响conj的识别
         for item in now['conj']:
@@ -160,7 +160,7 @@ def check_conj(Point_tokens, now):
 
 def VB_1(Point_tokens):
     nsubj = []
-    obj = ['covid']
+    obj = []
     if ('nsubj' in Point_tokens['cure'].keys()):  # 判断主语存在
         for item in Point_tokens['cure']['nsubj']:
             nsubj.append(item.text)  # 已经找到主语了，那就放进来。不过正常应该只有一个，这里只是因为建树时候顺带了数组存储
@@ -169,17 +169,23 @@ def VB_1(Point_tokens):
             # conj不能直接指示并列关系的情况如下："I play with him and she like it." 此时play和like作为两个中心词，是conj的关系，但由于后者like的nsubj是独立的，所以不公用前面的I
             # 换句话说，目前已知不能指示的，只有中心词并列的情况。而nsubj或obj并列的，应该都真的单纯就是并列
 
-    #     if('dobj' in Point_tokens['cure'].keys()): #判断直接宾语存在
-    #         for item in Point_tokens['cure']['dobj']:
-    #             obj.append(item.text)
-    #         now = Point_tokens['cure']['dobj']
-    #         check_conj(Point_tokens, now, obj)
+    if ('dobj' in Point_tokens['cure'].keys()):  # 判断直接宾语存在
+        for item in Point_tokens['cure']['dobj']:
+            obj.append(item.text)  # 类同主语
+            now = Point_tokens[item.text]
+            obj.extend(check_conj(Point_tokens, now))
 
-    #     if('prep' in Point_tokens['cure'].keys() and 'pobj' in Point_tokens['cure']['prep'].keys()):
-    #         for item in Point_tokens['cure']['prep']['pobj']:
-    #             obj.append(item.text)
-    #         now = Point_tokens['cure']['prep']['pobj']
-    #         check_conj(Point_tokens, now, obj)
+    if ('prep' in Point_tokens['cure'].keys()):  # 判断直接宾语存在
+        prep = []  # 间接宾语需要先找介词再找宾语
+        for item in Point_tokens['cure'][
+            'prep']:  # 有可能有多个，Alice play in the room, on the table and under the tree. in和on都是play的prep
+            prep.append(Point_tokens[item.text]['pobj'])  # 类同主语
+            now = Point_tokens[item.text]
+            prep.extend(check_conj(Point_tokens, now))
+
+        for item in prep:
+            if ('pobj' in Point_tokens[item.text].keys()):
+                obj.append(Point_tokens[item.text]['pobj'])
 
     if (len(nsubj) * len(obj) > 0):
         return nsubj, obj
