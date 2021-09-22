@@ -9,7 +9,7 @@
 - [ ] 'israeli recipe for lemon and bicarbonate drink is a coronavirus cure',
 - [ ] 'thousands of doctors say hydroxychloroquine cures coronavirus',
 - [ ] 'romania developed a coronavirus vaccine able to cure white people only',
-- [ ] 'lemon juice and bicarbonate mixture prevents and cures covid19 in israel', **这个的israel也会和the virus连在一起**
+- [ ] 'lemon juice and bicarbonate mixture prevents and cures covid19 in israel',
 - [ ] 'nevada governor steve sisolak has banned the use of an antimalaria drug that might help cure coronavirus',
 - [ ] 'president donald trump will announce that a scientist finally found a vaccine to cure coronavirus',
 - [ ] 'boiled orange peels with cayenne pepper are a cure for coronavirus',
@@ -17,7 +17,7 @@
 - [ ] 'huge results from breaking chloroquine study show 100 cure rate for patients infected with the coronavirus',
 - [ ] 'freshly boiled garlic water is a cure for coronavirus',
 - [ ] 'every election year has a disease coronavirus has a contagion factor of 2 and a cure rate of 997 for those under 50 it infects',
-- [X] 'chlorine dioxide kits sold online under various mms names miracle mineral solution, miracle mineral supplement master, mineral solution will cure the coronavirus',**稍微有点不足，因为这一个词太多了**
+- [X] 'chlorine dioxide kits sold online under various mms names miracle mineral solution, miracle mineral supplement master, mineral solution will cure the coronavirus',**稍微有点不足，因为这一个词太长了**
 - [ ] 'the new coronavirus can be cured by drinking one bowl of freshly boiled garlic water',
 - [ ] 'coronavirus does not cause a runny nose is killed by temperatures above 26 degrees causes lung fibrosis within days of infection can be diagnosed by holding your breath for 10 seconds and can be cured in the early stages by drinking plenty of water',
 - [ ] 'knust students discover vaccine for coronavirus and cure patient in cte divoire',
