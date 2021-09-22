@@ -145,6 +145,9 @@ def build_sematic_tree(ner_result):  # 先不建树了，有一个双向的指�
 
 
 Point_tokens = build_sematic_tree(ner_result)
+Parsing_dict = {} #便于通过单词名字str直接索引对应token
+for token in ner_result:
+    Parsing_dict[token.text] = token
 
 
 def check_conj(Point_tokens, now):
@@ -178,7 +181,7 @@ def check_conj(Point_tokens, now):
 #                 words.append(now['cc']['conj'].text)
 #                 now = Point_tokens[str(now['cc'])]
 
-def VB_1(Point_tokens):
+def VB_1(Point_tokens, Parsing_dict):
     nsubj = []
     obj = []
     head_word = 'cure'
@@ -187,6 +190,14 @@ def VB_1(Point_tokens):
             head_word = word
             break
 
+    oringin_head_word = head_word
+
+    while ('nsubj' not in Point_tokens[head_word].keys()  # 没主语
+           and Parsing_dict[head_word].dep_ == 'conj' and Parsing_dict[head_word].head.text != Parsing_dict[
+               head_word].text):  # 自己是conj且有父节点
+        head_word = Parsing_dict[
+            head_word].head.text  # 找到离当前这个中心词最近的一个，有主语的中心词。即处理A prevent and cure B的样本，需要用prevent的主语
+
     if ('nsubj' in Point_tokens[head_word].keys()):  # 判断主语存在
         for item in Point_tokens[head_word]['nsubj']:
             nsubj.append(item.text)  # 已经找到主语了，那就放进来。不过正常应该只有一个，这里只是因为建树时候顺带了数组存储
@@ -194,6 +205,13 @@ def VB_1(Point_tokens):
             nsubj.extend(check_conj(Point_tokens, now))  # 主语的conj应该都真的是对应的主语，真的直接指示并列关系。
             # conj不能直接指示并列关系的情况如下："I play with him and she like it." 此时play和like作为两个中心词，是conj的关系，但由于后者like的nsubj是独立的，所以不公用前面的I
             # 换句话说，目前已知不能指示的，只有中心词并列的情况。而nsubj或obj并列的，应该都真的单纯就是并列
+    else:  # 还找不到主语
+        pass  # 那就没办法了
+
+    head_word = oringin_head_word  # 刚才是为了应付缺主语的情况，宾语的话就不能往前找了。得往后
+    while ('dobj' not in Point_tokens[head_word].keys()  # 判断的是直接宾语没有。间接宾语由于这是及物动词，先不管
+           and 'conj' in Point_tokens[head_word].keys()):
+        head_word = Point_tokens[head_word]['conj'].text  # 找到离当前这个中心词最近的一个，有主语的中心词。即处理A prevent and cure B的样本，需要cure的宾语
 
     if ('dobj' in Point_tokens[head_word].keys()):  # 判断直接宾语存在
         for item in Point_tokens[head_word]['dobj']:
@@ -201,7 +219,7 @@ def VB_1(Point_tokens):
             now = Point_tokens[item.text]
             obj.extend(check_conj(Point_tokens, now))
 
-    if ('prep' in Point_tokens[head_word].keys()):  # 判断直接宾语存在
+    if ('prep' in Point_tokens[head_word].keys()):  # 判断间接宾语存在。不过cure样本好像用不到，因为它是及物动词。所以先不优化这里了。
         prep = []  # 间接宾语需要先找介词再找宾语
         for item in Point_tokens[head_word][
             'prep']:  # 有可能有多个，Alice play in the room, on the table and under the tree. in和on都是play的prep
@@ -221,6 +239,6 @@ def VB_1(Point_tokens):
         return False, False
 
 
-a, b = VB_1(Point_tokens)
+a, b = VB_1(Point_tokens, Parsing_dict)
 print(a)
 print(b)
