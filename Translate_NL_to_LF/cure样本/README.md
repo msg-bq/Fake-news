@@ -23,7 +23,7 @@
 - [X] 'knust students discover vaccine for coronavirus and cure patient in cte divoire', **不过这个是cure patient**，也还凑合算吧。这个如果patient前面不加the，cure会被识别为名词。这其实是个典型的可以常识知识增强的例子，就是说cure型patient不太可能是正确含义，动词才合理。但是吧，现阶段要不要做这个其实两说。因为效果其实太难预估了
 - [X] 'a video posted on facebook claiming that chloroquine and azithromycin are proven cures of covid19', **proven会被错误识别，连到video上。尚未简单办法处理，先跳**
 - [X] 'posts on social media claim that a spanish biological researcher called on international soccer stars cristiano ronaldo and lionel messi to find a cure for covid19 since they earn much more money than scientists',**无关样本**
-- [ ] 'there is no cure for covid19 no matter what the internet says',
+- [X] 'there is no cure for covid19 no matter what the internet says', **这个没有作为主语的实体，要么不识别，要么单独写个None标签**
 - [X] 'hydroxychloroquine cures this virus it just so happens this is the treatment used for radiation sickness',
 - [X] 'thousands of doctors say hydroxychloroquine cures coronavirus',
 - [ ] 'black cats in vietnam are being killed and consumed as a covid19 cure',
@@ -31,7 +31,7 @@
 - [X] 'hydroxychloroquine azithromycin and zinc cure covid19',
 - [X] 'a group called americas frontline doctors are featured in viral video claiming hydroxychloroquine cures covid19',
 - [X] 'stella immanuel claims that the drug combination of hydroxychloroquine zinc and azithromycin is a cure and preventative for covid19 and that people dont need to wear masks or practice physical distancing in a breitbart video featuring a group called americas frontline doctors',
-- [ ] 'fda warns of silver other bogus covid19 cures',
+- [X] 'fda warns of silver other bogus covid19 cures', **这个也基本不属于我们要处理的**
 - [ ] 'hydroxychloroquine no covid cure, experts warn'
 
 **注：目前打对勾的，尚未提取各词相关的修饰，只是提了中心词**
