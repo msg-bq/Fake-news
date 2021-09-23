@@ -20,7 +20,7 @@
 - [X] 'chlorine dioxide kits sold online under various mms names miracle mineral solution, miracle mineral supplement master, mineral solution will cure the coronavirus',**稍微有点不足，因为这一个词太长了**
 - [ ] 'the new coronavirus can be cured by drinking one bowl of freshly boiled garlic water',
 - [ ] 'coronavirus does not cause a runny nose is killed by temperatures above 26 degrees causes lung fibrosis within days of infection can be diagnosed by holding your breath for 10 seconds and can be cured in the early stages by drinking plenty of water',
-- [X] 'knust students discover vaccine for coronavirus and cure patient in cte divoire', **不过这个是cure patient**，也还凑合叭
+- [X] 'knust students discover vaccine for coronavirus and cure patient in cte divoire', **不过这个是cure patient**，也还凑合算吧。这个如果patient前面不加the，cure会被识别为名词。这其实是个典型的可以常识知识增强的例子，就是说cure型patient不太可能是正确含义，动词才合理。但是吧，现阶段要不要做这个其实两说。
 - [ ] 'a video posted on facebook claiming that chloroquine and azithromycin are proven cures of covid19',
 - [ ] 'posts on social media claim that a spanish biological researcher called on international soccer stars cristiano ronaldo and lionel messi to find a cure for covid19 since they earn much more money than scientists',
 - [ ] 'there is no cure for covid19 no matter what the internet says',
