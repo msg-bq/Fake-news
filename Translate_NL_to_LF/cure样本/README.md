@@ -15,14 +15,14 @@
 - [ ] 'boiled orange peels with cayenne pepper are a cure for coronavirus',
 - [ ] 'breathing air from a hair dryer or a sauna can prevent or cure covid19',
 - [ ] 'huge results from breaking chloroquine study show 100 cure rate for patients infected with the coronavirus',
-- [ ] 'freshly boiled garlic water is a cure for coronavirus',
+- [X] 'freshly boiled garlic water is a cure for coronavirus',
 - [X] 'every election year has a disease coronavirus has a contagion factor of 2 and a cure rate of 997 for those under 50 it infects', **治愈率不算cure样本**
 - [X] 'chlorine dioxide kits sold online under various mms names miracle mineral solution, miracle mineral supplement master, mineral solution will cure the coronavirus',**稍微有点不足，因为这一个词太长了**
 - [ ] 'the new coronavirus can be cured by drinking one bowl of freshly boiled garlic water',
 - [ ] 'coronavirus does not cause a runny nose is killed by temperatures above 26 degrees causes lung fibrosis within days of infection can be diagnosed by holding your breath for 10 seconds and can be cured in the early stages by drinking plenty of water',
 - [X] 'knust students discover vaccine for coronavirus and cure patient in cte divoire', **不过这个是cure patient**，也还凑合算吧。这个如果patient前面不加the，cure会被识别为名词。这其实是个典型的可以常识知识增强的例子，就是说cure型patient不太可能是正确含义，动词才合理。但是吧，现阶段要不要做这个其实两说。因为效果其实太难预估了
 - [ ] 'a video posted on facebook claiming that chloroquine and azithromycin are proven cures of covid19',
-- [ ] 'posts on social media claim that a spanish biological researcher called on international soccer stars cristiano ronaldo and lionel messi to find a cure for covid19 since they earn much more money than scientists',
+- [ ] 'posts on social media claim that a spanish biological researcher called on international soccer stars cristiano ronaldo and lionel messi to find a cure for covid19 since they earn much more money than scientists',**无关样本**
 - [ ] 'there is no cure for covid19 no matter what the internet says',
 - [X] 'hydroxychloroquine cures this virus it just so happens this is the treatment used for radiation sickness',
 - [X] 'thousands of doctors say hydroxychloroquine cures coronavirus',
@@ -30,6 +30,8 @@
 - [X] 'we cant make a vaccine that works for flu no vaccine for the respiratory syncytial virus rsv and we cant cure cancer yet somehow scientists can make a vaccine for covid19 in six months', **cure cancer，与cure样本无瓜**
 - [X] 'hydroxychloroquine azithromycin and zinc cure covid19',
 - [X] 'a group called americas frontline doctors are featured in viral video claiming hydroxychloroquine cures covid19',
-- [ ] 'stella immanuel claims that the drug combination of hydroxychloroquine zinc and azithromycin is a cure and preventative for covid19 and that people dont need to wear masks or practice physical distancing in a breitbart video featuring a group called americas frontline doctors',
+- [X] 'stella immanuel claims that the drug combination of hydroxychloroquine zinc and azithromycin is a cure and preventative for covid19 and that people dont need to wear masks or practice physical distancing in a breitbart video featuring a group called americas frontline doctors',
 - [ ] 'fda warns of silver other bogus covid19 cures',
-- [ ] 'hydroxychloroquine no covid cure experts warn'
+- [ ] 'hydroxychloroquine no covid cure, experts warn'
+
+**注：目前打对勾的，尚未提取各词相关的修饰，只是提了中心词**
