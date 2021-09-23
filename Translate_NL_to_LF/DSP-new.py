@@ -37,7 +37,7 @@ matcher.add("cure", [pattern])
 doc = nlp("hydroxychloroquine cure the virus")
 matches = matcher(doc)
 
-print(matches) # [(4851363122962674176, [6, 0, 10, 9])]
+print(matches)
 # Each token_id corresponds to one pattern dict
 match_id, token_ids = matches[0]
 for i in range(len(token_ids)):
