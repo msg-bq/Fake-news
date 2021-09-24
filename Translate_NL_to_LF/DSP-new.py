@@ -86,3 +86,57 @@ print(matches)
 match_id, token_ids = matches[0]
 for i in range(len(token_ids)):
     print(pattern[i]["RIGHT_ID"] + ":", doc[token_ids[i]].text)
+
+    
+#cured做被动
+matcher = DependencyMatcher(nlp.vocab)
+
+pattern = [
+    {
+        "RIGHT_ID": "anchor_cure_passive",
+        "RIGHT_ATTRS": {"ORTH": "cured", "POS": "VERB"},
+    },
+    {
+        "LEFT_ID": "anchor_cure_passive",
+        "REL_OP": ";*",
+        "RIGHT_ID": "cure_subject",
+        "RIGHT_ATTRS": {"DEP": {"IN": ["nsubj", "nsubjpass"]}},
+    },
+    {
+        "LEFT_ID": "anchor_cure_passive",
+        "REL_OP": ">",
+        "RIGHT_ID": "be",
+        "RIGHT_ATTRS": {"DEP": "auxpass"}
+    },
+    {
+        "LEFT_ID": "anchor_cure_passive",
+        "REL_OP": ">",
+        "RIGHT_ID": "cure_prep_by",
+        "RIGHT_ATTRS": {"ORTH": "by", "DEP": "prep"},#应该只能是cured by吧。by的依存关系，如果后面是名词，则是agent
+        #动词是prep。这是连动词的规则
+    },
+    {
+        "LEFT_ID": "cure_prep_by",
+        "REL_OP": ">",
+        "RIGHT_ID": "cure_pcomp", #by后面的动词
+        "RIGHT_ATTRS": {"DEP": "pcomp"},
+    },
+    #希望的是一直取介词取到最后一个pobj为止，或者就最后一个pobj也行。用自带这个matcher规则的话就得写一大串，感觉不如写代码，先这样叭
+    #不过如果是只要最后一个的话，倒是可以取巧，直接选取所有的pobj，然后从最后的mathes里弄数值最大的那个出来就行
+    {
+        "LEFT_ID": "cure_pcomp",
+        "REL_OP": ">>",
+        "RIGHT_ID": "cure_pobj", #by后面的动词
+        "RIGHT_ATTRS": {"DEP": "pobj"},
+    },
+]
+
+matcher.add("cure_pass", [pattern])
+doc = nlp('the new coronavirus can be cured by drinking one bowl of freshly boiled garlic water')
+matches = matcher(doc)
+
+print(matches) 
+# Each token_id corresponds to one pattern dict
+match_id, token_ids = matches[0]
+for i in range(len(token_ids)):
+    print(pattern[i]["RIGHT_ID"] + ":", doc[token_ids[i]].text)
