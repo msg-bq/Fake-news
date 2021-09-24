@@ -9,13 +9,13 @@ from spacy.matcher import DependencyMatcher
 pattern_verb_1 = [
     {
         "RIGHT_ID": "anchor_cure",
-        "RIGHT_ATTRS": {"ORTH": "cure"}
+        "RIGHT_ATTRS": {"ORTH": {"IN": ["cure", "cures"]}}
     },
     {
         "LEFT_ID": "anchor_cure",
         "REL_OP": "$--",
         "RIGHT_ID": "cure_subject",
-        "RIGHT_ATTRS": {"DEP": "nsubj"},
+        "RIGHT_ATTRS": {"DEP": {"IN": ["nsubj", "csubj"]}},
     },
     {
         "LEFT_ID": "anchor_cure",
@@ -90,8 +90,7 @@ pattern_noun_1 = [
 pattern_noun_2 = [
     {
         "RIGHT_ID": "anchor_cure_noun",
-        "RIGHT_ATTRS": {"ORTH": {"IN": ["cure", "cures"]}, "POS": "NOUN"},
-        "RIGHT_ATTRS": {"DEP": "attr"}
+        "RIGHT_ATTRS": {"ORTH": {"IN": ["cure", "cures"]}, "POS": "NOUN", "DEP": {"IN": ["attr", "pobj"]}},
     },
     {
         "LEFT_ID": "anchor_cure_noun",
@@ -101,9 +100,9 @@ pattern_noun_2 = [
     },
     {
         "LEFT_ID": "cure_attr",
-        "REL_OP": ">",
+        "REL_OP": ";*", #原来是>>，换成这个后，如果有多个nsubj，应当取最后那个没宾语的。所以这个还是适合写代码，选取往上走第一个有主语的，然后再把conj一串带走
         "RIGHT_ID": "nsubj",
-        "RIGHT_ATTRS": {"DEP": {"IN": ["nsubj", "expl"]}},  # expl是处理there be的
+        "RIGHT_ATTRS": {"DEP": {"IN": ["nsubj", "nsubjpass", "expl"]}},  # expl是处理there be的; advcl好像意味着引导一个从句，还有待继续考虑 #nsubjpass是考虑到有时候主语处在被动态
     },
     {
         "LEFT_ID": "anchor_cure_noun",
@@ -147,7 +146,7 @@ pattern_verb_pass = [
         "LEFT_ID": "anchor_cure_passive",
         "REL_OP": ">",
         "RIGHT_ID": "cure_prep_by",
-        "RIGHT_ATTRS": {"ORTH": "by", "DEP": "prep"},  # 应该只能是cured by吧。by的依存关系，如果后面是名词，则是agent
+        "RIGHT_ATTRS": {"ORTH": "by", "DEP": {"IN": ["prep", "agent"]}},  # 应该只能是cured by吧。by的依存关系，如果后面是名词，则是agent
         # 动词是prep。这是连动词的规则
     },
     {
@@ -175,34 +174,49 @@ pattern_verb_pass = [
 # for i in range(len(token_ids)):
 #     print(pattern[i]["RIGHT_ID"] + ":", doc[token_ids[i]].text)
 
+pattern_verb_2 = [ #其实为了整齐应该放在上面，但是下面是避免影响markdown的索引
+    {
+        "RIGHT_ID": "anchor_cure",
+        "RIGHT_ATTRS": {"ORTH": {"IN": ["cure", "cures"]}}
+    },
+    {
+        "LEFT_ID": "anchor_cure",
+        "REL_OP": ">", #和verb_1相比，只有这里变了。这个对于VB_1函数的话，应该是都能包括的
+        "RIGHT_ID": "cure_subject",
+        "RIGHT_ATTRS": {"DEP": {"IN": ["nsubj", "csubj"]}},
+    },
+    {
+        "LEFT_ID": "anchor_cure",
+        "REL_OP": ">",
+        "RIGHT_ID": "cure_object",
+        "RIGHT_ATTRS": {"DEP": "dobj"},
+    },
+]
+
 
 samples = [
     'social media posts recommend tonic water and the zinc as a cure for a virus infection as the drink contains quinine whose synthetic relative the hydroxychloroquine is on trial as a the virus treatment',
-    'israeli recipe for lemon and bicarbonate drink is a coronavirus cure',
+    'israeli recipe for lemon and bicarbonate drink is a virus cure',
     'coronavirus does not cause a runny nose, and is killed by temperatures above 26 degrees, and causes lung fibrosis within days of infection, and can be diagnosed by holding your breath for 10 seconds and can be cured in the early stages by drinking plenty of water',
-    'posts on social media claim that a spanish biological researcher called on international soccer stars cristiano ronaldo and lionel messi to find a cure for the virus since they earn much more money than scientists',
     'nevada governor steve sisolak has banned the use of an antimalaria drug that might help cure coronavirus',
     'president donald trump will announce that a scientist finally found a vaccine to cure coronavirus',
-    'boiled orange peels with cayenne pepper are a cure for coronavirus',
+    'boiled orange peels with cayenne pepper are a cure for the virus',
     'breathing air from a hair dryer or a sauna can prevent or cure the virus',
-    'huge results from breaking chloroquine study show 100 cure rate for patients infected with the coronavirus',
     'freshly boiled garlic water is a cure for coronavirus',
-    'every election year has a disease coronavirus has a contagion factor of 2 and a cure rate of 997 for those under 50 it infects',
-    'chlorine dioxide kits sold online under various mms names  miracle mineral solution miracle mineral supplement master mineral solution  will cure the coronavirus',
-    'the the virus can be cured by drinking one bowl of freshly boiled garlic water',
-    'romania developed a coronavirus vaccine able to cure white people only',
-    'knust students discover vaccine for coronavirus and cure patient in cte divoire',
+    'Chlorine dioxide kits sold online under various MMS names Miracle Mineral Solution, Miracle Mineral Supplement, Master Mineral Solution will cure the virus.',
+    'the virus can be cured by drinking one bowl of freshly boiled garlic water',
+    'romania developed a virus vaccine able to cure white people only',
+    'lemon juice and bicarbonate mixture prevents and cures the virus in israel',
+    'knust students discover vaccine for the virus and cure patient in cte divoire',
     'a video posted on facebook claiming that chloroquine and the azithromycin are proven cures of the virus',
     'there is no cure for the virus no matter what the internet says',
     'the hydroxychloroquine cures this virus it just so happens this is the treatment used for radiation sickness',
     'thousands of doctors say the hydroxychloroquine cures coronavirus',
     'black cats in vietnam are being killed and consumed as a the virus cure',
-    'we cant make a vaccine that works for flu no vaccine for the respiratory syncytial virus rsv and we cant cure cancer yet somehow scientists can make a vaccine for the virus in six months',
-    'the hydroxychloroquine, the azithromycin and the zinc cure the virus',
+    'hydroxychloroquine, azithromycin and zinc cure the virus', #前面有非停止词的时候再加the，其他时候就算了
     'a group called americas frontline doctors are featured in viral video claiming the hydroxychloroquine cures the virus',
     'stella immanuel claims that the drug combination of the hydroxychloroquine, the zinc and the azithromycin is a cure and preventative for the virus and that people dont need to wear masks or practice physical distancing in a breitbart video featuring a group called americas frontline doctors',
-    'fda warns of silver other bogus the virus cures',
-    'the hydroxychloroquine no the virus cure experts warn']
+    'the hydroxychloroquine no the virus cure, experts warn']
 
 
 def add_cure_patterns(matcher):
@@ -210,6 +224,7 @@ def add_cure_patterns(matcher):
     将需要用的pattern放到这个matcher里
     '''
     matcher.add("cure_verb_1", [pattern_verb_1])  # 陈述句
+    matcher.add("cure_verb_2", [pattern_verb_2]) #陈述句
     matcher.add("cure_noun_1", [pattern_noun_1])  # A是治疗方式为了B
     matcher.add("cure_noun_2", [pattern_noun_2])  # A是B的治疗方式
     matcher.add("cure_verb_pass", [pattern_verb_pass])  # 被动句
@@ -231,7 +246,12 @@ if __name__ == '__main__':
             continue
         match_results.append(match_result)
         match_id, token_ids = match_result[0]
+        print("样本原句：", sample)
+        print("提取情况：")
         for i in range(len(token_ids)):
-            print(pattern[i]["RIGHT_ID"] + ":", doc[token_ids[i]].text)
+            print(cure_matcher.get(match_id)[1][0][i]["RIGHT_ID"] + ":", doc[token_ids[i]].text)
+        print("=======================")
 
+    print("样本数：", len(samples))
+    print("识别成功数：", len(match_results))
     print(len(match_results) / len(samples))
