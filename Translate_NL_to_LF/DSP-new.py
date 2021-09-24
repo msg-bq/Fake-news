@@ -44,7 +44,7 @@ for i in range(len(token_ids)):
     print(pattern[i]["RIGHT_ID"] + ":", doc[token_ids[i]].text)
 
     
-#名词
+#名词-A是治疗方法为了B
 pattern = [
     {
         "RIGHT_ID": "anchor_cure_noun",
@@ -87,7 +87,47 @@ match_id, token_ids = matches[0]
 for i in range(len(token_ids)):
     print(pattern[i]["RIGHT_ID"] + ":", doc[token_ids[i]].text)
 
+
+#名词-A是B的治疗方法
+# matcher = DependencyMatcher(nlp.vocab)
+
+pattern = [
+    {
+        "RIGHT_ID": "anchor_cure_noun",
+        "RIGHT_ATTRS": {"ORTH": {"IN": ["cure", "cures"]}, "POS": "NOUN"},
+        "RIGHT_ATTRS": {"DEP": "attr"}
+    },
+    {
+        "LEFT_ID": "anchor_cure_noun",
+        "REL_OP": "<",
+        "RIGHT_ID": "cure_attr",
+        "RIGHT_ATTRS": {},#寻找is are这种，就是cure的父节点自己。并且要求这个词与cure的关系是attr
+    },
+    {
+        "LEFT_ID": "cure_attr",
+        "REL_OP": ">",
+        "RIGHT_ID": "nsubj",
+        "RIGHT_ATTRS": {"DEP": {"IN": ["nsubj", "expl"]}}, #expl是处理there be的
+    },
+    {
+        "LEFT_ID": "anchor_cure_noun",
+        "REL_OP": ">",
+        "RIGHT_ID": "cure_compound",
+        "RIGHT_ATTRS": {"DEP": "compound"},#XXX治疗方法，里的XXX
+    },
+]
+
+matcher.add("cure_noun", [pattern])
+doc = nlp('israeli recipe for lemon and bicarbonate drink is a coronavirus cure')
+matches = matcher(doc)
+
+print(matches) # [(4851363122962674176, [6, 0, 10, 9])]
+# Each token_id corresponds to one pattern dict
+match_id, token_ids = matches[0]
+for i in range(len(token_ids)):
+    print(pattern[i]["RIGHT_ID"] + ":", doc[token_ids[i]].text)
     
+
 #cured做被动
 matcher = DependencyMatcher(nlp.vocab)
 
