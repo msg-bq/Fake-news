@@ -8,7 +8,7 @@ from spacy.matcher import DependencyMatcher
 # cure做动词的陈述句
 
 
-pattern = [
+pattern_verb_1 = [
     {
         "RIGHT_ID": "anchor_cure",
         "RIGHT_ATTRS": {"ORTH": "cure"}
@@ -34,7 +34,7 @@ pattern = [
 ]
 
 
-# doc = nlp("hydroxychloroquine cure the virus")
+# doc = nlp("the hydroxychloroquine cure the virus")
 # matches = matcher(doc)
 
 # print(matches)
@@ -45,7 +45,7 @@ pattern = [
 
     
 #名词-A是治疗方法为了B
-pattern = [
+pattern_noun_1 = [
     {
         "RIGHT_ID": "anchor_cure_noun",
         "RIGHT_ATTRS": {"ORTH": {"IN": ["cure", "cures"]}, "POS": "NOUN"},
@@ -91,7 +91,7 @@ pattern = [
 #名词-A是B的治疗方法
 # matcher = DependencyMatcher(nlp.vocab)
 
-pattern = [
+pattern_noun_2 = [
     {
         "RIGHT_ID": "anchor_cure_noun",
         "RIGHT_ATTRS": {"ORTH": {"IN": ["cure", "cures"]}, "POS": "NOUN"},
@@ -129,9 +129,9 @@ pattern = [
     
 
 #cured做被动
-matcher = DependencyMatcher(nlp.vocab)
+# matcher = DependencyMatcher(nlp.vocab)
 
-pattern = [
+pattern_verb_pass = [
     {
         "RIGHT_ID": "anchor_cure_passive",
         "RIGHT_ATTRS": {"ORTH": "cured", "POS": "VERB"},
@@ -172,7 +172,7 @@ pattern = [
 ]
 
 
-# doc = nlp('the new coronavirus can be cured by drinking one bowl of freshly boiled garlic water')
+# doc = nlp('the the virus can be cured by drinking one bowl of freshly boiled garlic water')
 # matches = matcher(doc)
 
 # print(matches)
@@ -182,47 +182,46 @@ pattern = [
 #     print(pattern[i]["RIGHT_ID"] + ":", doc[token_ids[i]].text)
 
 
-samples = ['social media posts recommend tonic water and zinc as a cure for a novel coronavirus infection as the drink contains quinine whose synthetic relative hydroxychloroquine is on trial as a covid19 treatment',
+samples = ['social media posts recommend tonic water and the zinc as a cure for a virus infection as the drink contains quinine whose synthetic relative the hydroxychloroquine is on trial as a the virus treatment',
  'israeli recipe for lemon and bicarbonate drink is a coronavirus cure',
- 'coronavirus does not cause a runny nose is killed by temperatures above 26 degrees causes lung fibrosis within days of infection can be diagnosed by holding your breath for 10 seconds and can be cured in the early stages by drinking plenty of water',
- 'lemon juice and bicarbonate mixture prevents and cures covid19 in israel',
- 'posts on social media claim that a spanish biological researcher called on international soccer stars cristiano ronaldo and lionel messi to find a cure for covid19 since they earn much more money than scientists',
+  'coronavirus does not cause a runny nose, and is killed by temperatures above 26 degrees, and causes lung fibrosis within days of infection, and can be diagnosed by holding your breath for 10 seconds and can be cured in the early stages by drinking plenty of water',
+ 'posts on social media claim that a spanish biological researcher called on international soccer stars cristiano ronaldo and lionel messi to find a cure for the virus since they earn much more money than scientists',
  'nevada governor steve sisolak has banned the use of an antimalaria drug that might help cure coronavirus',
  'president donald trump will announce that a scientist finally found a vaccine to cure coronavirus',
  'boiled orange peels with cayenne pepper are a cure for coronavirus',
- 'breathing air from a hair dryer or a sauna can prevent or cure covid19',
+ 'breathing air from a hair dryer or a sauna can prevent or cure the virus',
  'huge results from breaking chloroquine study show 100 cure rate for patients infected with the coronavirus',
  'freshly boiled garlic water is a cure for coronavirus',
  'every election year has a disease coronavirus has a contagion factor of 2 and a cure rate of 997 for those under 50 it infects',
  'chlorine dioxide kits sold online under various mms names  miracle mineral solution miracle mineral supplement master mineral solution  will cure the coronavirus',
- 'the new coronavirus can be cured by drinking one bowl of freshly boiled garlic water',
+ 'the the virus can be cured by drinking one bowl of freshly boiled garlic water',
  'romania developed a coronavirus vaccine able to cure white people only',
  'knust students discover vaccine for coronavirus and cure patient in cte divoire',
- 'a video posted on facebook claiming that chloroquine and azithromycin are proven cures of covid19',
- 'there is no cure for covid19 no matter what the internet says',
- 'hydroxychloroquine cures this virus it just so happens this is the treatment used for radiation sickness',
- 'thousands of doctors say hydroxychloroquine cures coronavirus',
- 'black cats in vietnam are being killed and consumed as a covid19 cure',
- 'we cant make a vaccine that works for flu no vaccine for the respiratory syncytial virus rsv and we cant cure cancer yet somehow scientists can make a vaccine for covid19 in six months',
- 'hydroxychloroquine azithromycin and zinc cure covid19',
- 'a group called americas frontline doctors are featured in viral video claiming hydroxychloroquine cures covid19',
- 'stella immanuel claims that the drug combination of hydroxychloroquine zinc and azithromycin is a cure and preventative for covid19 and that people dont need to wear masks or practice physical distancing in a breitbart video featuring a group called americas frontline doctors',
- 'fda warns of silver other bogus covid19 cures',
- 'hydroxychloroquine no covid cure experts warn']
+ 'a video posted on facebook claiming that chloroquine and the azithromycin are proven cures of the virus',
+ 'there is no cure for the virus no matter what the internet says',
+ 'the hydroxychloroquine cures this virus it just so happens this is the treatment used for radiation sickness',
+ 'thousands of doctors say the hydroxychloroquine cures coronavirus',
+ 'black cats in vietnam are being killed and consumed as a the virus cure',
+ 'we cant make a vaccine that works for flu no vaccine for the respiratory syncytial virus rsv and we cant cure cancer yet somehow scientists can make a vaccine for the virus in six months',
+ 'the hydroxychloroquine, the azithromycin and the zinc cure the virus',
+ 'a group called americas frontline doctors are featured in viral video claiming the hydroxychloroquine cures the virus',
+ 'stella immanuel claims that the drug combination of the hydroxychloroquine, the zinc and the azithromycin is a cure and preventative for the virus and that people dont need to wear masks or practice physical distancing in a breitbart video featuring a group called americas frontline doctors',
+ 'fda warns of silver other bogus the virus cures',
+ 'the hydroxychloroquine no the virus cure experts warn']
 
 def add_cure_patterns(matcher):
     '''
     将需要用的pattern放到这个matcher里
     '''
-    matcher.add("cure_verb_1", [pattern]) #陈述句
-    matcher.add("cure_noun_1", [pattern]) #A是治疗方式为了B
-    matcher.add("cure_noun_2", [pattern]) #A是B的治疗方式
-    matcher.add("cure_verb_pass", [pattern]) #被动句
+    matcher.add("cure_verb_1", [pattern_verb_1]) #陈述句
+    matcher.add("cure_noun_1", [pattern_noun_1]) #A是治疗方式为了B
+    matcher.add("cure_noun_2", [pattern_noun_2]) #A是B的治疗方式
+    matcher.add("cure_verb_pass", [pattern_verb_pass]) #被动句
 
     return matcher
 
 if __name__ == '__main__':
-    nlp = spacy.load('en_core_web_sm-3.1.0') #自己的目录
+    nlp = spacy.load('D:/git/Fake-news/Fake-news/en_core_web_sm-3.1.0') #自己的目录
     matcher = DependencyMatcher(nlp.vocab)
     cure_matcher = add_cure_patterns(matcher)
 
@@ -234,6 +233,8 @@ if __name__ == '__main__':
         if(len(match_result) == 0):
             continue
         match_results.append(match_result)
-        match_id, token_ids = match_results[0]
+        match_id, token_ids = match_result[0]
         for i in range(len(token_ids)):
             print(pattern[i]["RIGHT_ID"] + ":", doc[token_ids[i]].text)
+
+    print(len(match_results) / len(samples))
