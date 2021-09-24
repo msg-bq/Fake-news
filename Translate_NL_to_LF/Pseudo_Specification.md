@@ -18,12 +18,12 @@
 然后，conj，应当与cc前的中心词，共享主语和宾语等指向。
 第三，如果conj，也有自己的主语宾语等某个成分的话，那就不和前面的中心词共享成分了。
 
-### 抽取规则
+### 抽取规则（目前只看这里就行）
 **提取出来的规则，都要在这里以书面形式介绍。**
 
 一、cure样本
 1. cure做动词的规则
-   1. cure的主动句（函数名VB_1）
+   1. cure的主动句（函数名VB_1）：[代码1（抽取全面）](https://github.com/msg-bq/Fake-news/blob/main/Translate_NL_to_LF/DSP.py#L184)、[代码2（格式整齐）](https://github.com/msg-bq/Fake-news/blob/main/Translate_NL_to_LF/DSP-new.py#L8)
       1. 如果cure的主语和直接宾语均存在，则直接提取nsubj和dobj。 
       2. 如果主语不存在，且cure的依存关系是conj，则向上寻找cure的head，使用第一个有主语的head的nsubj；如果宾语不存在，且存在某个词以conj的依存关系指向cure，则向下寻找cure的conj，使用第一个有直接宾语的子节点的dobj。
       
@@ -31,7 +31,7 @@
       
       **注：代码中其实还有prep+pobj这种间接宾语的部分。不过我后来想了想，cure是及物的，正常应该不会有间接宾语。就跳过了**。 
 
-2. cure做名词的规则
+2. cure做名词的规则：[代码](https://github.com/msg-bq/Fake-news/blob/main/Translate_NL_to_LF/DSP-new.py#L47)
    
    提取"主语+be动词+cure(NOUN)+介词+间接宾语"
    
