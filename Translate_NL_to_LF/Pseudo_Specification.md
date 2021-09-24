@@ -39,3 +39,5 @@
    
    主语部分包括"nsubj"和"expl"。前者是正常主语，后者是there be句型的there
    
+3. cure做被动句的规则：[代码](https://github.com/msg-bq/Fake-news/blob/main/Translate_NL_to_LF/DSP-new.py#L91)
+   提取"主语-be动词(依存关系auxpass表被动)-cured-by-间接宾语"
