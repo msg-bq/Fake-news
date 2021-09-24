@@ -18,20 +18,20 @@
 - [X] 'freshly boiled garlic water is a cure for coronavirus',
 - [X] 'every election year has a disease coronavirus has a contagion factor of 2 and a cure rate of 997 for those under 50 it infects', **治愈率不算cure样本**
 - [X] 'chlorine dioxide kits sold online under various mms names miracle mineral solution, miracle mineral supplement master, mineral solution will cure the coronavirus',**稍微有点不足，因为这一个词太长了**
-- [ ] 'the new coronavirus can be cured by drinking one bowl of freshly boiled garlic water',
-- [ ] 'coronavirus does not cause a runny nose is killed by temperatures above 26 degrees causes lung fibrosis within days of infection can be diagnosed by holding your breath for 10 seconds and can be cured in the early stages by drinking plenty of water',
+- [X] 'the new coronavirus can be cured by drinking one bowl of freshly boiled garlic water',
+- [X] 'coronavirus does not cause a runny nose; is killed by temperatures above 26 degrees; causes lung fibrosis within days of infection; can be diagnosed by holding your breath for 10 seconds and can be cured in the early stages by drinking plenty of water', **以后全数据集，批量替换";"为", and"**
 - [X] 'knust students discover vaccine for coronavirus and cure patient in cte divoire', **不过这个是cure patient**，也还凑合算吧。这个如果patient前面不加the，cure会被识别为名词。这其实是个典型的可以常识知识增强的例子，就是说cure型patient不太可能是正确含义，动词才合理。但是吧，现阶段要不要做这个其实两说。因为效果其实太难预估了
 - [X] 'a video posted on facebook claiming that chloroquine and azithromycin are proven cures of covid19', **proven会被错误识别，连到video上。尚未简单办法处理，先跳**
 - [X] 'posts on social media claim that a spanish biological researcher called on international soccer stars cristiano ronaldo and lionel messi to find a cure for covid19 since they earn much more money than scientists',**无关样本**
 - [X] 'there is no cure for covid19 no matter what the internet says', **这个没有作为主语的实体，要么不识别，要么单独写个None标签**
 - [X] 'hydroxychloroquine cures this virus it just so happens this is the treatment used for radiation sickness',
 - [X] 'thousands of doctors say hydroxychloroquine cures coronavirus',
-- [ ] 'black cats in vietnam are being killed and consumed as a covid19 cure',
+- [X] 'black cats in vietnam are being killed and consumed as a covid19 cure', **covid19 cure**并不标准，跳过这个样本。
 - [X] 'we cant make a vaccine that works for flu no vaccine for the respiratory syncytial virus rsv and we cant cure cancer yet somehow scientists can make a vaccine for covid19 in six months', **cure cancer，与cure样本无瓜**
 - [X] 'hydroxychloroquine azithromycin and zinc cure covid19',
 - [X] 'a group called americas frontline doctors are featured in viral video claiming hydroxychloroquine cures covid19',
 - [X] 'stella immanuel claims that the drug combination of hydroxychloroquine zinc and azithromycin is a cure and preventative for covid19 and that people dont need to wear masks or practice physical distancing in a breitbart video featuring a group called americas frontline doctors',
 - [X] 'fda warns of silver other bogus covid19 cures', **这个也基本不属于我们要处理的**
-- [ ] 'hydroxychloroquine no covid cure, experts warn'
+- [X] 'hydroxychloroquine no covid cure, experts warn' **covid cure**不标准，跳过。不过既然这个出现了两次，可以考虑将这个词单独作为一个词匹配，然后单独处理。
 
 **注：目前打对勾的，尚未提取各词相关的修饰，只是提了中心词**
