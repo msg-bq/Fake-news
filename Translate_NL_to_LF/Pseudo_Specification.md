@@ -31,14 +31,19 @@
       
       **注：代码中其实还有prep+pobj这种间接宾语的部分。不过我后来想了想，cure是及物的，正常应该不会有间接宾语。就跳过了**。 
 
-2. cure做名词的规则：[代码](https://github.com/msg-bq/Fake-news/blob/main/Translate_NL_to_LF/DSP-new.py#L47)
+2. cure做名词的规则
+   1. A是治疗方法为了B：[代码](https://github.com/msg-bq/Fake-news/blob/main/Translate_NL_to_LF/DSP-new.py#L47)
    
-   提取"主语+be动词+cure(NOUN)+介词+间接宾语"
+      1. 提取"主语+be动词+cure(NOUN)+介词+间接宾语"
    
-   并要求be动词(实践中是直接选取cure的父节点)，与cure的关系是attr。
+      2. 并要求be动词(实践中是直接选取cure的父节点)，与cure的关系是attr。
    
-   主语部分包括"nsubj"和"expl"。前者是正常主语，后者是there be句型的there
+      3. 主语部分包括"nsubj"和"expl"。前者是正常主语，后者是there be句型的there
    
-3. cure做被动句的规则：[代码](https://github.com/msg-bq/Fake-news/blob/main/Translate_NL_to_LF/DSP-new.py#L91)
+   2. A是B的治疗方法：[代码](https://github.com/msg-bq/Fake-news/blob/main/Translate_NL_to_LF/DSP-new.py#L91)
+      
+      提取"主语+be动词+cure的修饰词+cure"。其余同上。
+   
+3. cure做被动句的规则：[代码](https://github.com/msg-bq/Fake-news/blob/main/Translate_NL_to_LF/DSP-new.py#L131)
    
    提取"主语-be动词(依存关系auxpass表被动)-cured-by-间接宾语"
