@@ -19,17 +19,19 @@ class Set(BaseConcept):
     '''
     def __init__(self, value=None, name='', comments=''):
         super().__init__(value, name, comments)
-        assert type(value) == list
+        assert type(value) == set
 
 
 class BaseAssertion(object):
-    def __init__(self, LHS=None, RHS=None):
+    def __init__(self, LHS=None, RHS=None, name = '', comments = ''):
         assert type(LHS) == ActionOperators #我一时间忘了周老师有无严格要求左式是Operator(X)的形式，
         # 不过至少转代码的时候强行设定这个，感觉不亏，也利于整齐
         self.LHS = LHS #为了整齐叭，用的时候主要用
         self.RHS = RHS
+        self.name = name
+        self.comments = comments
 
 class Assertion(BaseConcept):
-    def __init__(self, value=None, name='', comments=''):
-        super().__init__(value, name, comments)
+    def __init__(self, LHS=None, RHS=None, name = '', comments = ''):
+        super().__init__(LHS, RHS, name, comments)
         assert type(value) == BaseAssertion
